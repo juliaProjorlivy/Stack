@@ -1,4 +1,3 @@
-#include "stack_ctor_dtor.h"
 #include "stack_push_pop.h"
 #include "stack_error.h"
 
@@ -7,7 +6,7 @@ int main()
     struct stack stk = {};
     int x = 0;
     stack_ctor(&stk, 10);
-    for(int i = 0; i < 10; i++)
+    for(int i = 0; i < 8; i++)
     {
         stack_push(&stk, i);
     }

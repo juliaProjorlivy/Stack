@@ -1,10 +1,9 @@
 #ifndef STACK_ERROR_H
 #define STACK_ERROR_H
 
-#include <stdio.h>
-#include <stdint.h>
+#include "stack_ctor_dtor.h"
 
-extern uint32_t stack_errno;
+extern stack_result_t stack_errno;
 
 void stack_error_decode(uint32_t error);
 

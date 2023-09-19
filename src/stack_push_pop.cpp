@@ -9,13 +9,13 @@ static void stack_realloc(struct stack *stk)
     if(stk->size == stk->capacity)
     {
         stk->capacity *=multiplier;
-        stk->data = (elem_t *)realloc(stk->data, stk->capacity);
+        stk->data = (elem_t *)realloc(stk->data, (size_t)(stk->capacity));
     }
 
     else if((stk->size) * multiplier * multiplier <= stk->capacity)
     {
         stk->capacity /=(multiplier*multiplier);
-        stk->data = (elem_t *)realloc(stk->data, stk->capacity);
+        stk->data = (elem_t *)realloc(stk->data, (size_t)(stk->capacity));
     }
 }
 

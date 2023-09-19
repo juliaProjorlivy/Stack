@@ -1,7 +1,4 @@
 #include "stack_error.h"
-#include "stack_ctor_dtor.h"
-#include <stdio.h>
-#include <stdint.h>
 
 #define SP_EL "%d"
 
@@ -45,8 +42,8 @@ void stack_error_decode(uint32_t error)
 void stack_dump(struct stack *stk, const char *file1, int line1, const char *func_name1, const char *arg_name1)
 {
     fprintf(stderr, "%s from %s:%d %s()\n", arg_name1, file1, line1, func_name1);
-    fprintf(stderr, " size = %zu;\n", stk->size);
-    fprintf(stderr, " capacity = %zu;\n  {\n", stk->capacity);
+    fprintf(stderr, " size = %d;\n", stk->size);
+    fprintf(stderr, " capacity = %d;\n  {\n", stk->capacity);
     for(int i = 0; i < stk->size; i++)
     {
         fprintf(stderr, "   *[%d] = "SP_EL";\n", i, stk->data[i]);
