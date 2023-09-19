@@ -15,15 +15,8 @@ struct stack
     size_t capacity;
 };
 
-
-void stack_dump(struct stack *stk, const char *line, int n_str, const char *func_name, const char *arg_name1);
-
-uint32_t stack_valid(const struct stack *stk);
-
 stack_result_t stack_ctor(struct stack *stk, size_t capacity);
 
 stack_result_t stack_dtor(struct stack *stk);
-
-
 
 #endif
