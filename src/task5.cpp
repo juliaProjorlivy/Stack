@@ -1,5 +1,6 @@
 #include "stack_push_pop.h"
 #include "stack_error.h"
+#include <limits.h>
 
 int main()
 {
@@ -10,11 +11,13 @@ int main()
     {
         stack_push(&stk, i);
     }
-    for(int i = 0; i < 5; i++)
+    for(int i = 0; i < 9; i++)
     {
         stack_pop(&stk, &x);
     }
-    // stack_pop(&stk, &x);
+
+    stack_pop(&stk, &x);
+    // printf("code = %d\n", (int)(char)INT_MIN);
     printf("%d\n", x);
     stack_dtor(&stk);
     return 0;

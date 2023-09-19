@@ -1,8 +1,5 @@
-// #include "stack_ctor_dtor.h"
 #include "stack_error.h"
 #include <stdlib.h>
-
-// extern uint32_t stack_errno;
 
 stack_result_t stack_ctor(struct stack *stk, int capacity)
 {
@@ -12,8 +9,7 @@ stack_result_t stack_ctor(struct stack *stk, int capacity)
 
     if(stack_invalid(stk))
     {
-        ERROR(stack_errno);
-        STACK_DUMP(stk);
+        STACK_ERROR(stk, stack_errno);
     }
     return stack_errno;
 }
@@ -22,8 +18,8 @@ stack_result_t stack_dtor(struct stack *stk)
 {
     if(stack_invalid(stk))
     {
-        ERROR(stack_errno);
-        STACK_DUMP(stk);
+        STACK_ERROR(stk, stack_errno);
+        return stack_errno;
     }
 
     free(stk->data);

@@ -2,7 +2,6 @@
 
 #define SP_EL "%d"
 
-// extern uint32_t stack_errno;
 uint32_t stack_errno = 0;
 
 void stack_error_decode(uint32_t error)
@@ -10,31 +9,31 @@ void stack_error_decode(uint32_t error)
     switch (error)
     {
     case 0b0001:
-        fprintf(stderr, "ERROR: memory allocation failure cannot access memory for struct stack\n");
+        fprintf(stderr, "memory allocation failure cannot access memory for struct stack");
         break;
     case 0b0010:
-        fprintf(stderr, "ERROR: memory allocation failure cannot access memory for stack\n");
+        fprintf(stderr, "memory allocation failure cannot access memory for stack");
         break;
     case 0b0011:
-        fprintf(stderr, "ERROR: memory allocation failure cannot access memory for struct stack and stack\n");
+        fprintf(stderr, "memory allocation failure cannot access memory for struct stack and stack");
         break;
     case 0b0100:
-        fprintf(stderr, "ERROR: current position is out of range\n");
+        fprintf(stderr, "current position is out of range");
         break;
     case 0b0101:
-        fprintf(stderr, "ERROR: memory allocation failure cannot access memory for struct stack\n \
-                                                                            current position is out of range\n"); 
+        fprintf(stderr, "memory allocation failure cannot access memory for struct stack\n \
+                                                                            current position is out of range"); 
         break;
     case 0b0110:
-        fprintf(stderr, "ERROR: memory allocation failure cannot access memory for stack\n \
-                                                                            current position is out of range\n");
+        fprintf(stderr, "memory allocation failure cannot access memory for stack\n \
+                                                                            current position is out of range");
         break;
     case 0b0111:
-        fprintf(stderr, "ERROR: memory allocation failure cannot access memory for struct stack and stack\n \
-                                                                            current position is out of range\n");
+        fprintf(stderr, "memory allocation failure cannot access memory for struct stack and stack\n \
+                                                                            current position is out of range");
         break;
     default:
-        puts("undefined error\n");
+        puts("undefined error");
         break;
     }
 }
