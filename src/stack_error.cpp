@@ -1,41 +1,22 @@
 #include "stack_error.h"
+#include <stdlib.h>
 
 #define SP_EL "%d"
 
 uint32_t stack_errno = 0;
 
+const int max_bit = 32;
+
+const char *str_error[] =   {"memory allocation failure cannot access memory for struct stack", 
+                                    "memory allocation failure cannot access memory for stack",       
+                                                            "current position is out of range"};
+
 void stack_error_decode(uint32_t error)
 {
-    switch (error)
+    for(int shift = 0; shift < max_bit; shift++)
     {
-    case 0b0001:
-        fprintf(stderr, "memory allocation failure cannot access memory for struct stack");
-        break;
-    case 0b0010:
-        fprintf(stderr, "memory allocation failure cannot access memory for stack");
-        break;
-    case 0b0011:
-        fprintf(stderr, "memory allocation failure cannot access memory for struct stack and stack");
-        break;
-    case 0b0100:
-        fprintf(stderr, "current position is out of range");
-        break;
-    case 0b0101:
-        fprintf(stderr, "memory allocation failure cannot access memory for struct stack\n \
-                                                                            current position is out of range"); 
-        break;
-    case 0b0110:
-        fprintf(stderr, "memory allocation failure cannot access memory for stack\n \
-                                                                            current position is out of range");
-        break;
-    case 0b0111:
-        fprintf(stderr, "memory allocation failure cannot access memory for struct stack and stack\n \
-                                                                            current position is out of range");
-        break;
-    default:
-        puts("undefined error");
-        break;
-    }
+        if((1 << shift) & error) fprintf(stderr, "%s\n", str_error[shift]);
+    }   
 }
 
 void stack_dump(struct stack *stk, const char *file1, int line1, const char *func_name1, const char *arg_name1)
@@ -51,16 +32,20 @@ void stack_dump(struct stack *stk, const char *file1, int line1, const char *fun
     {
         fprintf(stderr, "   [%d] = "SP_EL" (POISON);\n", i, stk->data[i]);
     }
-    fprintf(stderr, "  }\n}\n");
+    fprintf(stderr, "  }\n");
 }
 
-uint32_t stack_invalid(const struct stack *stk)
+uint32_t stack_is_invalid(const struct stack *stk)
 {
     uint32_t error = 0;
 
-    if(!stk) error              |= 0b0001;
-    if(!stk->data) error        |= 0b0010;
-    if(stk->size < 0) error     |= 0b0100;
+    if(!stk) 
+    {
+        error                   |= STK_PROBLEM;
+        exit(EXIT_FAILURE);
+    }
+    if(!stk->data) error        |= DATA_PROBLEM;
+    if(stk->size < 0) error     |= SIZE_PROBLEM;
 
     stack_errno = error;
 
