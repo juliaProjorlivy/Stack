@@ -2,8 +2,6 @@
 #include "stack_error.h"
 #include <stdlib.h>
 
-extern uint32_t stack_errno;
-
 static void stack_realloc(struct stack *stk)
 {
     const int multiplier = 2;
@@ -25,7 +23,7 @@ stack_result_t stack_push(struct stack *stk, elem_t value)
 {
     if(stack_invalid(stk))
     {
-        stack_error_decode(stack_errno);
+        ERROR(stack_errno);
         STACK_DUMP(stk);
     }
 
@@ -40,7 +38,7 @@ stack_result_t stack_pop(struct stack *stk, elem_t *value)
 {
     if(stack_invalid(stk))
     {
-        stack_error_decode(stack_errno);
+        ERROR(stack_errno);
         STACK_DUMP(stk);
     }
 

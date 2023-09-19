@@ -4,7 +4,8 @@
 #include <stdint.h>
 
 #define SP_EL "%d"
-extern uint32_t stack_errno;
+
+// extern uint32_t stack_errno;
 uint32_t stack_errno = 0;
 
 void stack_error_decode(uint32_t error)
