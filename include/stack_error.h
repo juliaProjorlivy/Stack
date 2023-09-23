@@ -6,11 +6,21 @@
 
 #include "stack_ctor_dtor.h"
 
+const uint64_t canary = 0xCA11DED;
+
+const size_t canary_shift = sizeof(canary_t)/sizeof(elem_t);
+
 enum ERROR_CODE
 {
-    STK_PROBLEM,
-    DATA_PROBLEM,
-    SIZE_PROBLEM,
+    STK_PROBLEM                 = (1u << 0u),
+    DATA_PROBLEM                = (1u << 1u),
+    SIZE_PROBLEM                = (1u << 2u),
+    SIZE_OVER_CAPACITY_PROBLEM  = (1u << 3u),
+    POISON_PROBLEM              = (1u << 4u),
+    RIGHT_CANARY_STK_PROBLEM    = (1u << 5u),
+    LEFT_CANARY_STK_PROBLEM     = (1u << 6u),
+    RIGHT_CANARY_DATA_PROBLEM   = (1u << 7u),
+    LEFT_CANARY_DATA_PROBLEM    = (1u << 8u),
 };
 
 extern stack_result_t stack_errno;

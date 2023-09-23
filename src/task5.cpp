@@ -1,22 +1,26 @@
 #include "stack_push_pop.h"
 #include "stack_error.h"
+#include "stack_ctor_dtor.h"
 #include <limits.h>
 
 int main()
 {
     struct stack stk = {};
     int x = 0;
-    stack_ctor(&stk, 5);
-    for(int i = 0; i < 17; i++)
+    // stack_ctor(&stk, 5);
+    STACK_CTOR(&stk, 2);
+    for(int i = 0; i < 5; i++)
     {
-        stack_push(&stk, i);
+        stack_push(&stk, i + 10);
+        // STACK_ERROR(&stk, 0);
     }
-    for(int i = 0; i < 19; i++)
+    for(int i = 0; i < 7; i++)
     {
         stack_pop(&stk, &x);
     }
 
     // stack_pop(&stk, &x);
+    // STACK_ERROR(&stk, 0);
     printf("%d\n", x);
     stack_dtor(&stk);
     return 0;
