@@ -1,13 +1,12 @@
 #include "stack_error.h"
 #include <stdlib.h>
+#include <limits.h>
 
 #define ELEM_PRINT_SPEC "%d"
 
 uint32_t stack_errno = 0;
 
 const int max_bit = 32;
-
-const int poison = 0; ////////////!!!!!!!!!! change poison
 
 const char *str_error[] =   {"memory allocation failure cannot access memory for struct stack", 
                                     "memory allocation failure cannot access memory for data",       
@@ -61,11 +60,11 @@ uint32_t stack_is_invalid(const struct stack *stk)
         if(stk->data[index] != poison) error                        |= POISON_PROBLEM;
     }
     if(stk->right_canary != canary) error                           |= RIGHT_CANARY_STK_PROBLEM;
-    printf("left_cnary_data = %lx\n", *(canary_t *)(stk->data - canary_shift));
-    printf("right_cnary_data = %lx\n", *(canary_t *)(stk->data + stk->capacity));
+    // printf("left_cnary_data = %lx\n", *(stk->data - canary_shift));
+    // printf("right_cnary_data = %lx\n", *(stk->data + stk->capacity));
     if(stk->left_canary != canary) error                            |= LEFT_CANARY_STK_PROBLEM;
-    if(*((canary_t *)(stk->data - canary_shift)) != canary) error                 |= LEFT_CANARY_DATA_PROBLEM;
-    if(*((canary_t *)(stk->data + stk->capacity)) != canary) error |= RIGHT_CANARY_DATA_PROBLEM;
+    if(*((stk->data - canary_shift)) != canary) error               |= LEFT_CANARY_DATA_PROBLEM;
+    if(*((stk->data + stk->capacity)) != canary) error              |= RIGHT_CANARY_DATA_PROBLEM;
 
     stack_errno = error;
 

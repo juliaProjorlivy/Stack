@@ -4,9 +4,12 @@
 #define RED          "\x1b[31;1m" 
 #define END_OF_COLOR "\x1b[39;49m"
 
-#include "stack_ctor_dtor.h"
+#include "stack.h"
+#include <limits.h>
 
 const uint64_t canary = 0xCA11DED;
+
+const int poison = INT_MAX; ////////////!!!!!!!!!! change poison
 
 const size_t canary_shift = sizeof(canary_t)/sizeof(elem_t);
 

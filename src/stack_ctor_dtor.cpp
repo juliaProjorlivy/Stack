@@ -27,6 +27,10 @@ stack_result_t stack_ctor(struct stack *stk, int capacity, const char *file_name
     }
     *data = canary;
     stk->data = data + canary_shift;
+    for(size_t i = 0; i < stk->capacity; i++)
+    {
+        stk->data[i] = poison;
+    }
     *(data + capacity + canary_shift) = canary;
 
     if(stack_is_invalid(stk))
