@@ -1,5 +1,6 @@
 #include "stack_error.h"
 #include "stack_ctor_dtor.h"
+#include "stack.h"
 #include <stdlib.h>
 
 const size_t canary_size =  2*sizeof(canary_t);
@@ -27,19 +28,23 @@ stack_result_t stack_ctor(struct stack *stk, int capacity, const char *file_name
     }
     *data = canary;
     stk->data = data + canary_shift;
+
     for(size_t i = 0; i < stk->capacity; i++)
     {
         stk->data[i] = poison;
     }
+
     *(data + capacity + canary_shift) = canary;
 
     stk->stk_hash = oat_hash(stk, stk_size);
     stk->data_hash = oat_hash(stk->data, (size_t)stk->capacity);
+
     if(stack_is_invalid(stk))
     {
         STACK_ERROR(stk, stack_errno);
         return stack_errno;
     }
+
     return stack_errno;
 }
 
@@ -51,9 +56,13 @@ stack_result_t stack_dtor(struct stack *stk)
         return stack_errno;
     }
 
-    // TODO fill with poison
-
     stk->data -= canary_shift;
+
+    for(size_t i = 0; i < stk->capacity + canary_shift * 2; i++)
+    {
+        stk->data[i] = poison;
+    }
+
     free(stk->data);
 
     return stack_errno;

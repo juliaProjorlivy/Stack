@@ -13,8 +13,6 @@ typedef uint64_t canary_t;
 
 extern const size_t canary_size;
 
-const size_t stk_size = 3*sizeof(int) + 3*sizeof(const char *) + sizeof(elem_t *);
-
 struct stack
 {
     canary_t left_canary;
@@ -25,9 +23,12 @@ struct stack
     const char *func_name;
     const char *arg_name;
     int line;
+    canary_t right_canary;
     hash_t stk_hash; // TODO move to the end
     hash_t data_hash;
-    canary_t right_canary;
 };
+
+// const size_t stk_size = 3*sizeof(int) + 3*sizeof(const char *) + sizeof(elem_t *);
+const size_t stk_size = sizeof(stack) - 2 * sizeof(hash_t);
 
 #endif

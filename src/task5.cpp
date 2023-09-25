@@ -23,7 +23,7 @@ int main()
     char *s2 = "abcdek";
     printf("hash data = %zu\n", oat_hash(stk.data, stk.capacity));
     
-    printf("hash stk = %zu\n", oat_hash(&stk + canary_shift, data_size));
+    printf("hash stk = %zu\n", oat_hash(&stk, stk_size));
     printf("%d\n", x);
     stack_dtor(&stk);
     return 0;

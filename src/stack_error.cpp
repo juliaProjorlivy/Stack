@@ -16,7 +16,9 @@ const char *str_error[] =   {"memory allocation failure cannot access memory for
                                     "canary detected invasion in the stack form the right",
                                     "canary detected invasion in the stack from the left",
                                     "canary detected invasion in the data from the right",
-                                    "canary detected invasion in the data from the left"};
+                                    "canary detected invasion in the data from the left"
+                                    "hash for sruct stack mismatches",
+                                    "hash for data mismatches"};
 
 void stack_error_decode(uint32_t error)
 {
@@ -52,20 +54,19 @@ uint32_t stack_is_invalid(const struct stack *stk)
         stack_errno = error;
         return error;
     }
-    if(!stk->data) error                                            |= DATA_PROBLEM;
-    if(stk->size < 0) error                                         |= SIZE_PROBLEM;
-    if(stk->size > stk->capacity) error                             |= SIZE_OVER_CAPACITY_PROBLEM;
+    if(!stk->data) error |= DATA_PROBLEM;
+    if(stk->size < 0) error |= SIZE_PROBLEM;
+    if(stk->size > stk->capacity) error |= SIZE_OVER_CAPACITY_PROBLEM;
     for(int index = stk->size; index < stk->capacity; index++)
     {
-        if(stk->data[index] != poison) error                        |= POISON_PROBLEM;
+        if(stk->data[index] != poison) error |= POISON_PROBLEM;
     }
-    if(stk->right_canary != canary) error                           |= RIGHT_CANARY_STK_PROBLEM;
-    // printf("left_cnary_data = %lx\n", *(stk->data - canary_shift));
-    // printf("right_cnary_data = %lx\n", *(stk->data + stk->capacity));
-    if(stk->left_canary != canary) error                            |= LEFT_CANARY_STK_PROBLEM;
-    if(*((stk->data - canary_shift)) != canary) error               |= LEFT_CANARY_DATA_PROBLEM;
-    if(*((stk->data + stk->capacity)) != canary) error              |= RIGHT_CANARY_DATA_PROBLEM;
-    
+    if(stk->right_canary != canary) error |= RIGHT_CANARY_STK_PROBLEM;
+    if(stk->left_canary != canary) error |= LEFT_CANARY_STK_PROBLEM;
+    if(*((stk->data - canary_shift)) != canary) error |= LEFT_CANARY_DATA_PROBLEM;
+    if(*((stk->data + stk->capacity)) != canary) error |= RIGHT_CANARY_DATA_PROBLEM;
+    if(oat_hash((struct stack *)stk, stk_size) != stk->stk_hash) error |= HASH_STK_PROBLEM;
+    if(oat_hash(stk->data, stk->capacity) != stk->data_hash) error |= HASH_DATA_PROBLEM; 
 
     stack_errno = error;
 

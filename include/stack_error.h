@@ -26,6 +26,8 @@ enum ERROR_CODE
     LEFT_CANARY_STK_PROBLEM     = (1u << 6u),
     RIGHT_CANARY_DATA_PROBLEM   = (1u << 7u),
     LEFT_CANARY_DATA_PROBLEM    = (1u << 8u),
+    HASH_STK_PROBLEM            = (1u << 9u),
+    HASH_DATA_PROBLEM           = (1u << 10u),
 };
 
 extern stack_result_t stack_errno;

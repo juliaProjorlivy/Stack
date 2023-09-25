@@ -36,11 +36,14 @@ stack_result_t stack_realloc(struct stack *stk, int to_increase)
         stk->capacity *=multiplier;
         *(data + canary_shift + stk->capacity) = canary;
         stk->data = data + canary_shift; 
+
         for(int i = stk->size; i < stk->capacity; i++)
         {
             stk->data[i] = poison;
         }
-        // printf("first element free = %d\n", *(stk->data + stk->size));
+
+        stk->stk_hash = oat_hash(stk, stk_size);
+        stk->data_hash = oat_hash(stk->data, stk->capacity);
     }
 
     else
@@ -57,6 +60,9 @@ stack_result_t stack_realloc(struct stack *stk, int to_increase)
         stk->capacity /=(multiplier*decrease_multiplier);
         stk->data = data + canary_shift;
         *(stk->data + stk->capacity) = canary;
+
+        stk->stk_hash = oat_hash(stk, stk_size);
+        stk->data_hash = oat_hash(stk->data, stk->capacity);
     }
 
     return stack_errno;
@@ -81,12 +87,14 @@ stack_result_t stack_push(struct stack *stk, elem_t value)
 
     stk->data[(stk->size)++] = value;
 
+    stk->stk_hash = oat_hash(stk, stk_size);
+    stk->data_hash = oat_hash(stk->data, stk->capacity); // MACROS?
+
     return stack_errno;
 }
 
 stack_result_t stack_pop(struct stack *stk, elem_t *value)
 {
-    // fprintf(stderr, "RIGHT_CANARY_DATA = %lx\n", *(stk->data + stk->capacity));
     if(stack_is_invalid(stk))
     {
         STACK_ERROR(stk, stack_errno);
@@ -103,7 +111,6 @@ stack_result_t stack_pop(struct stack *stk, elem_t *value)
     *value = stk->data[stk->size];
 
     stk->data[stk->size] = poison;
-    // fprintf(stderr, "here must be poison = %d\n", stk->data[stk->size]);
 
     if((stk->size) * multiplier * decrease_multiplier <= stk->capacity)
     {
@@ -113,6 +120,9 @@ stack_result_t stack_pop(struct stack *stk, elem_t *value)
             return stack_errno;
         }
     }
+
+    stk->stk_hash = oat_hash(stk, stk_size);
+    stk->data_hash = oat_hash(stk->data, stk->capacity);
 
     return stack_errno;
 }
