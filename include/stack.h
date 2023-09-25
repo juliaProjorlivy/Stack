@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdint.h>
+#include "hash.h"
 
 typedef uint32_t stack_result_t;
 
@@ -10,11 +11,13 @@ typedef int elem_t;
 
 typedef uint64_t canary_t;
 
-extern size_t canary_size;
+extern const size_t canary_size;
+
+const size_t stk_size = 3*sizeof(int) + 3*sizeof(const char *) + sizeof(elem_t *);
 
 struct stack
 {
-    uint64_t left_canary;
+    canary_t left_canary;
     elem_t *data;
     int size;
     int capacity;
@@ -22,7 +25,9 @@ struct stack
     const char *func_name;
     const char *arg_name;
     int line;
-    uint64_t right_canary;
+    hash_t stk_hash; // TODO move to the end
+    hash_t data_hash;
+    canary_t right_canary;
 };
 
 #endif

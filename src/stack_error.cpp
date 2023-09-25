@@ -48,7 +48,7 @@ uint32_t stack_is_invalid(const struct stack *stk)
 
     if(!stk) 
     {
-        error                                                       |= STK_PROBLEM;
+        error |= STK_PROBLEM;
         stack_errno = error;
         return error;
     }
@@ -65,6 +65,7 @@ uint32_t stack_is_invalid(const struct stack *stk)
     if(stk->left_canary != canary) error                            |= LEFT_CANARY_STK_PROBLEM;
     if(*((stk->data - canary_shift)) != canary) error               |= LEFT_CANARY_DATA_PROBLEM;
     if(*((stk->data + stk->capacity)) != canary) error              |= RIGHT_CANARY_DATA_PROBLEM;
+    
 
     stack_errno = error;
 

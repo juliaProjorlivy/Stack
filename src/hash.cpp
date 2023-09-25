@@ -1,14 +1,11 @@
-#include <hash.h>
+#include "hash.h"
+#include <stack.h>
+#include <stdlib.h>
 
-const char *make_str_from_stk(struct stack *stk)
+uint32_t oat_hash(void *s, size_t len)
 {
-    size_t size_stk = sizeof(stk);
-    while
-}
+    unsigned char *p = (unsigned char *)s;
 
-uint32_t oat_hash(const char *s, size_t len)
-{
-    unsigned char *p = (unsigned char*) s;
     uint32_t h = 0;
 
     while(len--) {
