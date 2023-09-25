@@ -13,8 +13,6 @@ const int poison = INT_MAX; ////////////!!!!!!!!!! change poison
 
 const size_t canary_shift = sizeof(canary_t)/sizeof(elem_t);
 
-typedef uint32_t hash_t;
-
 enum ERROR_CODE
 {
     STK_PROBLEM                 = (1u << 0u),

@@ -41,9 +41,6 @@ stack_result_t stack_realloc(struct stack *stk, int to_increase)
         {
             stk->data[i] = poison;
         }
-
-        stk->stk_hash = oat_hash(stk, stk_size);
-        stk->data_hash = oat_hash(stk->data, stk->capacity);
     }
 
     else
@@ -60,9 +57,6 @@ stack_result_t stack_realloc(struct stack *stk, int to_increase)
         stk->capacity /=(multiplier*decrease_multiplier);
         stk->data = data + canary_shift;
         *(stk->data + stk->capacity) = canary;
-
-        stk->stk_hash = oat_hash(stk, stk_size);
-        stk->data_hash = oat_hash(stk->data, stk->capacity);
     }
 
     return stack_errno;
@@ -111,6 +105,9 @@ stack_result_t stack_pop(struct stack *stk, elem_t *value)
     *value = stk->data[stk->size];
 
     stk->data[stk->size] = poison;
+
+    stk->stk_hash = oat_hash(stk, stk_size);
+    stk->data_hash = oat_hash(stk->data, stk->capacity);
 
     if((stk->size) * multiplier * decrease_multiplier <= stk->capacity)
     {

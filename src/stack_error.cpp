@@ -17,8 +17,8 @@ const char *str_error[] =   {"memory allocation failure cannot access memory for
                                     "canary detected invasion in the stack from the left",
                                     "canary detected invasion in the data from the right",
                                     "canary detected invasion in the data from the left"
-                                    "hash for sruct stack mismatches",
-                                    "hash for data mismatches"};
+                                    "hash for sruct stack mismatched",
+                                    "hash for data mismatched"};
 
 void stack_error_decode(uint32_t error)
 {

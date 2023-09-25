@@ -11,6 +11,8 @@ typedef int elem_t;
 
 typedef uint64_t canary_t;
 
+typedef uint32_t hash_t;
+
 extern const size_t canary_size;
 
 struct stack
