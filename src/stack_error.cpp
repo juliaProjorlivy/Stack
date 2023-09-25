@@ -1,6 +1,4 @@
 #include "stack_error.h"
-#include <stdlib.h>
-#include <limits.h>
 
 #define ELEM_PRINT_SPEC "%d"
 

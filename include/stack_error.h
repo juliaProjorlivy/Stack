@@ -9,7 +9,7 @@
 
 const uint64_t canary = 0xCA11DED; 
 
-const int poison = INT_MAX; ////////////!!!!!!!!!! change poison
+const int poison = INT_MAX;
 
 const size_t canary_shift = sizeof(canary_t)/sizeof(elem_t);
 

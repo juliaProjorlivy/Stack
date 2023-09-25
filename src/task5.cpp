@@ -1,9 +1,6 @@
-#include "stack_push_pop.h"
-#include "stack_error.h"
 #include "stack_ctor_dtor.h"
-#include "hash.h"
-#include <limits.h>
-#include <string.h>
+#include "stack_error.h"
+#include "stack_push_pop.h"
 
 int main()
 {

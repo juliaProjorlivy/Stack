@@ -1,6 +1,5 @@
 #include "hash.h"
 #include <stack.h>
-#include <stdlib.h>
 
 uint32_t oat_hash(void *s, size_t len)
 {

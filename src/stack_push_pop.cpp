@@ -49,7 +49,6 @@ stack_result_t stack_realloc(struct stack *stk, int to_increase)
         (sizeof(char))*((stk->capacity/(multiplier*decrease_multiplier))*sizeof(elem_t) + canary_size));
         if(!data)
         {
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!
             stack_errno |= DATA_PROBLEM;
             STACK_ERROR(stk, stack_errno);
             return stack_errno;
@@ -82,7 +81,7 @@ stack_result_t stack_push(struct stack *stk, elem_t value)
     stk->data[(stk->size)++] = value;
 
     stk->stk_hash = oat_hash(stk, stk_size);
-    stk->data_hash = oat_hash(stk->data, stk->capacity); // MACROS?
+    stk->data_hash = oat_hash(stk->data, stk->capacity);
 
     return stack_errno;
 }

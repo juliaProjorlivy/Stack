@@ -11,9 +11,9 @@ typedef int elem_t;
 
 typedef uint64_t canary_t;
 
-typedef uint32_t hash_t;
-
 extern const size_t canary_size;
+
+typedef uint32_t hash_t;
 
 struct stack
 {
@@ -26,11 +26,10 @@ struct stack
     const char *arg_name;
     int line;
     canary_t right_canary;
-    hash_t stk_hash; // TODO move to the end
+    hash_t stk_hash;
     hash_t data_hash;
 };
 
-// const size_t stk_size = 3*sizeof(int) + 3*sizeof(const char *) + sizeof(elem_t *);
 const size_t stk_size = sizeof(stack) - 2 * sizeof(hash_t);
 
 #endif
