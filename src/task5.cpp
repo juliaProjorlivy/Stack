@@ -12,7 +12,7 @@ int main()
     {
         stack_push(&stk, i + 10);
     }
-    for(int i = 0; i < 5; i++)
+    for(int i = 0; i < 20; i++)
     {
         stack_pop(&stk, &x);
     }

@@ -64,7 +64,7 @@ uint32_t stack_is_invalid(const struct stack *stk)
     if(*((stk->data - canary_shift)) != canary) error |= LEFT_CANARY_DATA_PROBLEM;
     if(*((stk->data + stk->capacity)) != canary) error |= RIGHT_CANARY_DATA_PROBLEM;
     if(oat_hash((struct stack *)stk, stk_size) != stk->stk_hash) error |= HASH_STK_PROBLEM;
-    if(oat_hash(stk->data, stk->capacity) != stk->data_hash) error |= HASH_DATA_PROBLEM; 
+    if(oat_hash(stk->data, (size_t)stk->capacity) != stk->data_hash) error |= HASH_DATA_PROBLEM; 
 
     stack_errno = error;
 

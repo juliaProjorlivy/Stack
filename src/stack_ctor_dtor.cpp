@@ -18,10 +18,9 @@ stack_result_t stack_ctor(struct stack *stk, int capacity, const char *file_name
     stk->size = 0;
     stk->capacity = capacity;
 
-    elem_t *data = (elem_t *)calloc((size_t)(capacity*sizeof(elem_t) + canary_size), sizeof(char));
+    elem_t *data = (elem_t *)calloc((size_t)capacity*sizeof(elem_t) + canary_size, sizeof(char));
     if(!data)
     {
-        //!!!!!!!!!!!!!!!!!!!
         stack_errno |= DATA_PROBLEM;
         STACK_ERROR(stk, stack_errno);
         return stack_errno;
@@ -58,7 +57,7 @@ stack_result_t stack_dtor(struct stack *stk)
 
     stk->data -= canary_shift;
 
-    for(size_t i = 0; i < stk->capacity + canary_shift * 2; i++)
+    for(int i = 0; i < stk->capacity; i++)
     {
         stk->data[i] = poison;
     }

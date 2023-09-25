@@ -23,11 +23,10 @@ stack_result_t stack_realloc(struct stack *stk, int to_increase)
     if(to_increase)
     {
         elem_t *data = (elem_t *)realloc(stk->data - canary_shift, 
-                        sizeof(char)*((stk->capacity * multiplier)*sizeof(elem_t) + canary_size));
+                        sizeof(char)*(((size_t)(stk->capacity * multiplier))*sizeof(elem_t) + canary_size));
 
         if(!data)
         {
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!
             stack_errno |= DATA_PROBLEM;
             STACK_ERROR(stk, stack_errno);
             return stack_errno;
@@ -46,7 +45,7 @@ stack_result_t stack_realloc(struct stack *stk, int to_increase)
     else
     {
         elem_t *data = (elem_t *)realloc(stk->data - canary_shift, 
-        (sizeof(char))*((stk->capacity/(multiplier*decrease_multiplier))*sizeof(elem_t) + canary_size));
+        (sizeof(char))*((size_t)(stk->capacity/(multiplier*decrease_multiplier))*sizeof(elem_t) + canary_size));
         if(!data)
         {
             stack_errno |= DATA_PROBLEM;
@@ -81,7 +80,7 @@ stack_result_t stack_push(struct stack *stk, elem_t value)
     stk->data[(stk->size)++] = value;
 
     stk->stk_hash = oat_hash(stk, stk_size);
-    stk->data_hash = oat_hash(stk->data, stk->capacity);
+    stk->data_hash = oat_hash(stk->data, (size_t)stk->capacity);
 
     return stack_errno;
 }
@@ -106,7 +105,7 @@ stack_result_t stack_pop(struct stack *stk, elem_t *value)
     stk->data[stk->size] = poison;
 
     stk->stk_hash = oat_hash(stk, stk_size);
-    stk->data_hash = oat_hash(stk->data, stk->capacity);
+    stk->data_hash = oat_hash(stk->data, (size_t)stk->capacity);
 
     if((stk->size) * multiplier * decrease_multiplier <= stk->capacity)
     {
@@ -118,7 +117,7 @@ stack_result_t stack_pop(struct stack *stk, elem_t *value)
     }
 
     stk->stk_hash = oat_hash(stk, stk_size);
-    stk->data_hash = oat_hash(stk->data, stk->capacity);
+    stk->data_hash = oat_hash(stk->data, (size_t)stk->capacity);
 
     return stack_errno;
 }
