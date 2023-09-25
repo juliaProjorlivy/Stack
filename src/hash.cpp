@@ -1,9 +1,9 @@
 #include "hash.h"
 #include <stack.h>
 
-uint32_t oat_hash(void *s, size_t len)
+uint32_t oat_hash(const void *s, size_t len)
 {
-    unsigned char *p = (unsigned char *)s;
+    const unsigned char *p = (const unsigned char *)s;
 
     uint32_t h = 0;
 
