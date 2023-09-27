@@ -8,11 +8,13 @@ int main()
     int x = 0;
 
     STACK_CTOR(&stk, 2);
-    for(int i = 0; i < 6; i++)
+    for(int i = 0; i < 20; i++)
     {
+        printf("hash %d = %u\n", i, stk.data_hash);
+       
         stack_push(&stk, i + 10);
     }
-    for(int i = 0; i < 20; i++)
+    for(int i = 0; i < 4; i++)
     {
         stack_pop(&stk, &x);
     }

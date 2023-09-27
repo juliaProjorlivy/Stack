@@ -20,4 +20,3 @@ uint32_t oat_hash(const void *s, size_t len)
     return h;
 }
 
-
