@@ -36,7 +36,7 @@ stack_result_t stack_ctor(struct stack *stk, int capacity, const char *file_name
     *(data + capacity + canary_shift) = canary;
 
     stk->stk_hash = oat_hash(stk, stk_size);
-    stk->data_hash = oat_hash(stk->data, (size_t)stk->capacity *sizeof(elem_t));
+    stk->data_hash = oat_hash(stk->data, (size_t)stk->capacity);
 
     if(stack_is_invalid(stk))
     {
