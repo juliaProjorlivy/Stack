@@ -1,22 +1,22 @@
 #include "stack_error.h"
 
-#define ELEM_PRINT_SPEC "%d"
-
 uint32_t stack_errno = 0;
 
 const int max_bit = 32;
 
-const char *str_error[] =   {"memory allocation failure cannot access memory for struct stack", 
-                                    "memory allocation failure cannot access memory for data",       
-                                    "current position is out of range", 
-                                    "size exceeds capacity",
-                                    "free cells do not have poison inside",
-                                    "canary detected invasion in the stack form the right",
-                                    "canary detected invasion in the stack from the left",
-                                    "canary detected invasion in the data from the right",
-                                    "canary detected invasion in the data from the left"
-                                    "hash for sruct stack mismatched",
-                                    "hash for data mismatched"};
+const char *str_error[] = {
+    "memory allocation failure cannot access memory for struct stack", 
+    "memory allocation failure cannot access memory for data",       
+    "current position is out of range", 
+    "size exceeds capacity",
+    "free cells do not have poison inside",
+    "canary detected invasion in the stack form the right",
+    "canary detected invasion in the stack from the left",
+    "canary detected invasion in the data from the right",
+    "canary detected invasion in the data from the left"
+    "hash for sruct stack mismatched",
+    "hash for data mismatched",
+};
 
 void stack_error_decode(uint32_t error)
 {
@@ -64,7 +64,7 @@ uint32_t stack_is_invalid(const struct stack *stk)
     if(*((stk->data - canary_shift)) != canary) error |= LEFT_CANARY_DATA_PROBLEM;
     if(*((stk->data + stk->capacity)) != canary) error |= RIGHT_CANARY_DATA_PROBLEM;
     if(oat_hash(stk, stk_size) != stk->stk_hash) error |= HASH_STK_PROBLEM;
-    if(oat_hash(stk->data, (size_t)stk->capacity) != stk->data_hash) error |= HASH_DATA_PROBLEM; 
+    if(oat_hash(stk->data, (size_t)stk->capacity * sizeof(elem_t)) != stk->data_hash) error |= HASH_DATA_PROBLEM; 
 
     stack_errno = error;
 

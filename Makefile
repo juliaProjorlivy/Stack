@@ -5,7 +5,8 @@ SRCS = src/stack_ctor_dtor.cpp src/task5.cpp src/stack_push_pop.cpp src/stack_er
 OBJ = $(patsubst %.cpp, build/%.o, $(subst src/, , $(SRCS)))
 EXECUTABLE = stack
 VALGRIND = valgrind --leak-check=full --leak-resolution=med ./$(EXECUTABLE)
-
+OUT_LIB_FILE_NAME = libStack.a
+OUT_DIR = ./lib
 
 all: $(OBJ)
 	@echo "CXX $(EXECUTABLE)"
@@ -15,6 +16,9 @@ build/%.o: src/%.cpp
 	mkdir -p ./build
 	@$(CXX) $(CXX_FLAGS) -c -o $@ $<
 
+lib: $(OBJ)
+	mkdir -p ./$(OUT_DIR)
+	ar -r -o $(OUT_DIR)/$(OUT_LIB_FILE_NAME) $^
 
 .PHONY: clean mem
 
@@ -23,3 +27,4 @@ clean:
 
 mem:
 	valgrind --leak-check=full --leak-resolution=med ./$(EXECUTABLE)
+

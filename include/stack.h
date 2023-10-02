@@ -5,6 +5,8 @@
 #include <stdint.h>
 #include "hash.h"
 
+#define ELEM_PRINT_SPEC "%d"
+
 typedef uint32_t stack_result_t;
 
 typedef int elem_t;
