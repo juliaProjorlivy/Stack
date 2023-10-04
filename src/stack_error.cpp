@@ -1,4 +1,17 @@
 #include "stack_error.h"
+#include <assert.h>
+#include <math.h>
+
+static const double epsl = 1e-9;
+
+static int is_equal(elem_t x, elem_t y, double epsilon = epsl)
+{
+    assert (isfinite (x));
+    assert (isfinite (y));
+    assert (isfinite (epsilon));
+
+    return (fabs (x - y) < epsilon);
+}
 
 uint32_t stack_errno = 0;
 
@@ -57,12 +70,12 @@ uint32_t stack_is_invalid(const struct stack *stk)
     if(stk->size > stk->capacity) error |= SIZE_OVER_CAPACITY_PROBLEM;
     for(int index = stk->size; index < stk->capacity; index++)
     {
-        if(stk->data[index] != poison) error |= POISON_PROBLEM;
+        if(!is_equal(stk->data[index], poison)) error |= POISON_PROBLEM;
     }
     if(stk->right_canary != canary) error |= RIGHT_CANARY_STK_PROBLEM;
     if(stk->left_canary != canary) error |= LEFT_CANARY_STK_PROBLEM;
-    if(*((stk->data - canary_shift)) != canary) error |= LEFT_CANARY_DATA_PROBLEM;
-    if(*((stk->data + stk->capacity)) != canary) error |= RIGHT_CANARY_DATA_PROBLEM;
+    if(!is_equal(*((stk->data - canary_shift)), canary)) error |= LEFT_CANARY_DATA_PROBLEM;
+    if(!is_equal(*((stk->data + stk->capacity)), canary)) error |= RIGHT_CANARY_DATA_PROBLEM;
     if(oat_hash(stk, stk_size) != stk->stk_hash) error |= HASH_STK_PROBLEM;
     if(oat_hash(stk->data, (size_t)stk->capacity * sizeof(elem_t)) != stk->data_hash) error |= HASH_DATA_PROBLEM; 
 

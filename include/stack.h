@@ -5,11 +5,11 @@
 #include <stdint.h>
 #include "hash.h"
 
-#define ELEM_PRINT_SPEC "%d"
+#define ELEM_PRINT_SPEC "%lf"
 
 typedef uint32_t stack_result_t;
 
-typedef int elem_t;
+typedef double elem_t;
 
 typedef uint64_t canary_t;
 

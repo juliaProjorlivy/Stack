@@ -6,22 +6,22 @@
 int main()
 {
     struct stack stk = {};
-    int x = 0;
+    elem_t x = 0;
 
     STACK_CTOR(&stk, 2);
-    for(int i = 0; i < INT_MAX; i++)
+    for(int i = 0; i < 10; i++)
     {
         printf("hash %d\n", i);
        
         stack_push(&stk, i);
     }
-    stk.data[stk.size++] = 89;
-    for(int i = 0; i < 40; i++)
+    
+    for(int i = 0; i < 5; i++)
     {
         stack_pop(&stk, &x);
     }
     
-    printf("%d\n", x);
+    printf(ELEM_PRINT_SPEC "\n", x);
     stack_dtor(&stk);
     return 0;
 }
