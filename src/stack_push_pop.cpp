@@ -107,12 +107,15 @@ stack_result_t stack_pop(struct stack *stk, elem_t *value)
     stk->stk_hash = oat_hash(stk, stk_size);
     stk->data_hash = oat_hash(stk->data, (size_t)stk->capacity * sizeof(elem_t));
 
-    if((stk->size) * multiplier * decrease_multiplier <= stk->capacity)
+    if(stk->size > 0)
     {
-        if(stack_realloc(stk, TO_DECREASE))
+        if((stk->size) * multiplier * decrease_multiplier <= stk->capacity)
         {
-            STACK_ERROR(stk, stack_errno);
-            return stack_errno;
+            if(stack_realloc(stk, TO_DECREASE))
+            {
+                STACK_ERROR(stk, stack_errno);
+                return stack_errno;
+            }
         }
     }
 
