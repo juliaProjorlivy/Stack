@@ -46,11 +46,11 @@ void stack_dump(struct stack *stk, const char *file1, int line1, const char *fun
     fprintf(stderr, " capacity = %d;\n  {\n", stk->capacity);
     for(int i = 0; i < stk->size; i++)
     {
-        fprintf(stderr, "   *[%d] = "ELEM_PRINT_SPEC";\n", i, stk->data[i]);
+        fprintf(stderr, "   *[%d] = " ELEM_PRINT_SPEC ";\n", i, stk->data[i]);
     }
     for(int i = stk->size; i < stk->capacity; i++)
     {
-        fprintf(stderr, "   [%d] = "ELEM_PRINT_SPEC" (POISON);\n", i, stk->data[i]);
+        fprintf(stderr, "   [%d] = " ELEM_PRINT_SPEC " (POISON);\n", i, stk->data[i]);
     }
     fprintf(stderr, "  }\n");
 }
